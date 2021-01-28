@@ -28,11 +28,13 @@ class SceneRecognition(object):
             elif validators.url(image):
                 image_data = requests.get(image).content
             else:
-                raise Exception("String input is neigther a file nor a url")
+                raise Exception("file {} does not exist".format(image))
         elif isinstance(image,numpy.ndarray):
             image_data = cv2ToBytes(image,format=format)
-        elif isinstance(image,Image):
+        elif isinstance(image,Image.Image):
             image_data = pilToBytes(image,format=format)
+        elif isinstance(image,bytes):
+            image_data = image
         else:
             raise Exception("Unsupported input type: {}".format(type(image)))
 

@@ -3,7 +3,9 @@ from PIL import Image
 import cv2
 import numpy
 
-def pilToBytes(image: Image,format: str="jpg"):
+def pilToBytes(image: Image,format: str="jpeg"):
+    if format == "jpg":
+        format = "jpeg"
     buf = io.BytesIO()
     image.save(buf,format=format)
     return buf.getvalue()
