@@ -13,7 +13,7 @@ jobs:
     - name: Checkout repo
       uses: actions/checkout@master
     - name: Install Pytest
-      run: pip3 install pytest
+      run: pip3 install pytest setuptools --upgrade
     - name: Install DeepStack Client SDK
       run: python3 setup.py install
     - name: Test Scene
