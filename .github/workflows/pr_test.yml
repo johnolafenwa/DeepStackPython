@@ -14,6 +14,8 @@ jobs:
       uses: actions/checkout@master
     - name: Install Pytest
       run: pip3 install pytest
+    - name: Install DeepStack Client SDK
+      run: python3 setup.py install
     - name: Test Scene
       run: |
         sudo docker run -d --name deepstack -e VISION-SCENE=True -p 80:5000 deepquestai/deepstack:cpu-2020.12
