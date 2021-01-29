@@ -87,7 +87,6 @@ class SceneRecognition(object):
                             output_line_type
                         )
 
-                        out.write(frame)
                 elif response.status_code == 403:
                     if continue_on_error:
                         printError("The scene endpoint is not enabled on the DeepStack server")
@@ -108,6 +107,7 @@ class SceneRecognition(object):
                         printError("Unknown error : {} occured".format(response.status_code))
                     else:
                         raise Exception("Unknown error : {} occured".format(response.status_code))
+                out.write(frame)
             else:
                 break
 
