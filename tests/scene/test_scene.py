@@ -15,19 +15,6 @@ def test_scene_file():
     
     assert res.label == "yard"
     assert isinstance(res.confidence,float)
-
-def test_scene_callback():
-    
-    scene = SceneRecognition(config)
-
-    label = None
-
-    def call(image_data,results):
-        label = results.label
-
-    res = scene.processImage(os.path.join(IMAGES_DIR,"scene.jpg"),callback=call)
-    
-    assert label == "yard"
     
 def test_scene_url():
    
