@@ -2,6 +2,10 @@ import io
 from PIL import Image
 import cv2
 import numpy
+import os 
+
+def printError(message):
+    print(message,file=os.stderr)
 
 def pilToBytes(image: Image,format: str="jpeg"):
     if format == "jpg":

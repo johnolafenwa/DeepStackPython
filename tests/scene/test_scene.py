@@ -16,6 +16,19 @@ def test_scene_file():
     assert res.label == "yard"
     assert isinstance(res.confidence,float)
 
+def test_scene_callback():
+    
+    scene = SceneRecognition(config)
+
+    label = None
+
+    def call(image_data,results):
+        label = results.label
+
+    res = scene.processImage(os.path.join(IMAGES_DIR,"scene.jpg"),callback=call)
+    
+    assert label == "yard"
+    
 def test_scene_url():
    
     scene = SceneRecognition(config)
@@ -59,3 +72,17 @@ def test_scene_bytes():
 
     assert res.label == "yard"
     assert isinstance(res.confidence,float)
+
+def test_scene_video():
+
+    scene = SceneRecognition(config)
+
+    video = os.path.join(IMAGES_DIR,"video.mp4")
+
+    res = scene.processVideo(video,output="vid.mp4")
+
+    savedVid = cv2.VideoCapture("vid.mp4")
+
+    totalframecount= int(savedVid.get(cv2.CAP_PROP_FRAME_COUNT))
+
+    assert totalframecount == 1193
