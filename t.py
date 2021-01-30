@@ -1,5 +1,5 @@
 from PIL import Image
-from deepstack import SceneRecognition,ServerConfig
+from deepstack import SceneRecognition,ServerConfig, displayResponse
 import cv2 
 
 img = Image.open(r"C:\Users\johnolafenwa\Documents\AI\DeepStackPython\tests\images\scene.jpg")
@@ -12,8 +12,9 @@ def c(image_data,res):
     print("from callback",res.label)
 
 res = scene.processImage(r"C:\Users\johnolafenwa\Documents\AI\DeepStackPython\tests\images\scene.jpg",callback=c)
+displayResponse(r"C:\Users\johnolafenwa\Documents\AI\DeepStackPython\tests\images\scene.jpg",res)
 
-scene.processVideo(r"C:\Users\johnolafenwa\Documents\AI\DeepStackPython\tests\images\video.mp4",output="out6.mp4",callback=c)
+scene.processVideo(r"C:\Users\johnolafenwa\Videos\2020-12-16-15-00-14.flv",output="out6.mp4",display=True,callback=c)
 
 v = cv2.VideoCapture("out6.mp4")
 

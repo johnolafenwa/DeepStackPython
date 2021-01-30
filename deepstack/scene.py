@@ -54,7 +54,7 @@ class SceneRecognition(object):
         else:
             raise Exception("Unknown error : {} occured".format(response.status_code))
 
-    def processVideo(self,video,output=None,codec=cv2.VideoWriter_fourcc(*'mp4v'),fps=24,callback=None, continue_on_error=False,output_font=cv2.FONT_HERSHEY_SIMPLEX, output_pos=(50,50),output_font_scale=1,output_font_color=(0,0,255),output_line_type=cv2.LINE_4):
+    def processVideo(self,video,output=None,codec=cv2.VideoWriter_fourcc(*'mp4v'),fps=24,display=False,callback=None, continue_on_error=False,output_font=cv2.FONT_HERSHEY_SIMPLEX, output_pos=(50,50),output_font_scale=1,output_font_color=(0,0,255),output_line_type=cv2.LINE_4):
         if not isinstance(video,cv2.VideoCapture):
             video = cv2.VideoCapture(video)
         width  = video.get(3) 
@@ -108,6 +108,12 @@ class SceneRecognition(object):
                     else:
                         raise Exception("Unknown error : {} occured".format(response.status_code))
                 out.write(frame)
+
+                if display:
+                    cv2.imshow('Image Viewer', frame)
+        
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    break
             else:
                 break
 
