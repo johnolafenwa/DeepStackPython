@@ -4,7 +4,7 @@ config = ServerConfig("http://localhost:89")
 detection = Detection(config)
 scene = SceneRecognition(config)
 
-detections = scene.processVideo(r"C:\Users\johnolafenwa\Videos\2020-12-16-15-00-14.flv",display=True,output="detection.mp4")
+detections = detection.processVideo(r"C:\Users\johnolafenwa\Videos\2020-12-16-15-00-14.flv",min_confidence=0.7,display=True,output="detection.mp4")
 
 f0 = detections[0]
 

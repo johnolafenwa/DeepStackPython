@@ -12,9 +12,10 @@ import time
 class SceneRecognition(object):
     def __init__(self,config: ServerConfig):
         self.config = config
+        self.__endpoint = "v1/vision/scene"
 
     def __process_image(self,image_data: bytes):
-        response = requests.post(self.config.server_url+"v1/vision/scene",
+        response = requests.post(self.config.server_url+self.__endpoint,
         files={"image": image_data},
         data={"api_key": self.config.api_key}
         )

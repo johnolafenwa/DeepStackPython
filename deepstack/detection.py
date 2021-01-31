@@ -10,19 +10,24 @@ import numpy
 import time
 
 class Detection(object):
-    def __init__(self,config: ServerConfig):
+    def __init__(self,config: ServerConfig,name=None):
         self.config = config
+        if name is None:
+            self.__endpoint = "v1/vision/detection"
+        else:
+            self.__endpoint = "v1/vision/custom/{}".format(name)
 
-    def __process_image(self,image_data: bytes):
-        response = requests.post(self.config.server_url+"v1/vision/detection",
+
+    def __process_image(self,image_data: bytes, min_confidence: float):
+        response = requests.post(self.config.server_url+self.__endpoint,
         files={"image": image_data},
-        data={"api_key": self.config.api_key}
+        data={"api_key": self.config.api_key,"min_confidence":min_confidence}
         )
 
         return response
 
     #allow folder input, with exts param specifying comma separated exts
-    def processImage(self, image,format="jpg", callback=None):
+    def processImage(self, image,format="jpg",min_confidence=0.4 ,callback=None):
         if isinstance(image,str):
             if os.path.isfile(image):
                 image_data = open(image,"rb").read()
@@ -39,7 +44,7 @@ class Detection(object):
         else:
             raise Exception("Unsupported input type: {}".format(type(image)))
 
-        response = self.__process_image(image_data)
+        response = self.__process_image(image_data, min_confidence)
 
         if response.status_code == 200:
             data = DetectionResponse(response.json())
@@ -55,7 +60,7 @@ class Detection(object):
         else:
             raise Exception("Unknown error : {} occured".format(response.status_code))
 
-    def processVideo(self,video,output=None,codec=cv2.VideoWriter_fourcc(*'mp4v'),fps=24,display=False,callback=None, continue_on_error=False,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,0,255)):
+    def processVideo(self,video,min_confidence=0.4,output=None,codec=cv2.VideoWriter_fourcc(*'mp4v'),fps=24,display=False,callback=None, continue_on_error=False,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,0,255)):
         detections = {}
         video_input = cv2.VideoCapture(video)
         width  = video_input.get(3) 
@@ -80,7 +85,7 @@ class Detection(object):
             if valid:
                 frame_count = frame_count + 1
                 frame_data = cv2ToBytes(frame)
-                response = self.__process_image(frame_data)
+                response = self.__process_image(frame_data, min_confidence)
                 data = None
                 if response.status_code == 200:
                     data = DetectionResponse(response.json())
