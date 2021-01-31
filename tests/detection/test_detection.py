@@ -20,7 +20,7 @@ def test_scene_url():
     
     detection = Detection(config)
 
-    res = detection.processImage("https://flowergardengirl.co.uk/wp-content/uploads/2017/07/Garden-Design-chelsea-screen-raised-beds-wonderful-planting-artificial-grass-olives-trees.jpg")
+    res = detection.processImage("https://docs.deepstack.cc/_images/family-and-dog.jpg")
 
     assert len(res) == 3
 
