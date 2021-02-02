@@ -1,4 +1,4 @@
-from deepstack import Detection,ServerConfig,pilToBytes
+from deepstack_sdk import Detection,ServerConfig,pilToBytes
 import os
 import cv2 
 from PIL import Image
@@ -13,15 +13,6 @@ def test_detection_file():
 
     res = detection.detectObject(os.path.join(IMAGES_DIR,"pelosi.webp"))
     
-    assert len(res) == 1
-    
-def test_detection_url():
-   
-    
-    detection = Detection(config,name="mask")
-
-    res = detection.detectObject("https://kanecountyconnects.com/wp-content/uploads/2020/02/Virus-Protective-Face-Mask-Depositphotos.jpg")
-
     assert len(res) == 1
 
 def test_detection_cv2():

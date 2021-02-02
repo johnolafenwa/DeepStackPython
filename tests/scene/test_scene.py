@@ -1,4 +1,4 @@
-from deepstack import SceneRecognition,ServerConfig,pilToBytes
+from deepstack_sdk import SceneRecognition,ServerConfig,pilToBytes
 import os
 import cv2 
 from PIL import Image
