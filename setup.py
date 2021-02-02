@@ -1,7 +1,7 @@
 from setuptools import setup,find_packages
 
 setup(name= "deepstack-sdk",
-      version='0.1.0',
+      version='0.1.1',
       description='DeepStack Python SDK',
       url="https://github.com/johnolafenwa/DeepStackPython",
       author='John Olafenwa and Moses Olafenwa',
