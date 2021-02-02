@@ -1,4 +1,4 @@
-from deepstack import ServerConfig, Detection
+from deepstack_sdk import ServerConfig, Detection
 import json
 
 config = ServerConfig("http://localhost:80")
