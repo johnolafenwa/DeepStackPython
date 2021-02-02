@@ -32,7 +32,7 @@ class Face(object):
         return response
 
     #allow folder input, with exts param specifying comma separated exts
-    def detectFace(self, image,format="jpg",min_confidence=0.4,output=None,callback=None, output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,255,0)):
+    def detectFace(self, image,format="jpg",min_confidence=0.4,output=None,callback=None, output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224)):
         if isinstance(image,str):
             if os.path.isfile(image):
                 image_data = open(image,"rb").read()
@@ -69,7 +69,7 @@ class Face(object):
             raise Exception("Unknown error : {} occured".format(response.status_code))
 
      #allow folder input, with exts param specifying comma separated exts
-    def recognizeFace(self, image,format="jpg",min_confidence=0.7,output=None,callback=None, output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,255,0)):
+    def recognizeFace(self, image,format="jpg",min_confidence=0.7,output=None,callback=None, output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224)):
         if isinstance(image,str):
             if os.path.isfile(image):
                 image_data = open(image,"rb").read()
@@ -106,7 +106,7 @@ class Face(object):
         else:
             raise Exception("Unknown error : {} occured".format(response.status_code))
 
-    def detectFaceVideo(self,video,min_confidence=0.4,output=None,codec=cv2.VideoWriter_fourcc(*'mp4v'),fps=24,display=False,callback=None, continue_on_error=False,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,255,0)):
+    def detectFaceVideo(self,video,min_confidence=0.4,output=None,codec=cv2.VideoWriter_fourcc(*'mp4v'),fps=24,display=False,callback=None, continue_on_error=False,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224)):
         detections = {}
         video_input = cv2.VideoCapture(video)
         width  = video_input.get(3) 
@@ -181,7 +181,7 @@ class Face(object):
 
         return detections
 
-    def recognizeFaceVideo(self,video,min_confidence=0.7,output=None,codec=cv2.VideoWriter_fourcc(*'mp4v'),fps=24,display=False,callback=None, continue_on_error=False,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,255,0)):
+    def recognizeFaceVideo(self,video,min_confidence=0.7,output=None,codec=cv2.VideoWriter_fourcc(*'mp4v'),fps=24,display=False,callback=None, continue_on_error=False,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224)):
         detections = {}
         video_input = cv2.VideoCapture(video)
         width  = video_input.get(3) 

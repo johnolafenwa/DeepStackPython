@@ -1,8 +1,8 @@
 from deepstack_sdk import ServerConfig, Detection
 import json
 
-config = ServerConfig("http://localhost:80")
-detection = Detection(config,"openlogo")
+config = ServerConfig("http://localhost:89")
+detection = Detection(config)
 
 response = detection.detectObject("detection.jpg",output="output_image.jpg")
 
