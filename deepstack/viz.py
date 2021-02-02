@@ -1,11 +1,15 @@
 import cv2
 import matplotlib.pyplot as plt 
-from .structs import SceneResponse
+from .structs import SceneResponse, DetectionResponse, FaceDetectionResponse, FaceRecognitionResponse
 from .utils import bytestoCV2
 from PIL import Image
 import numpy
 
-def displayResponse(image,response,output_font=cv2.FONT_HERSHEY_SIMPLEX, output_pos=(50,50),output_font_scale=5,output_font_color=(0,0,255),output_line_type=cv2.LINE_4):
+def saveResponse(image,response,output,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,255,0)):
+    frame = drawResponse(image,response,output_font,output_font_color)
+    cv2.imwrite(output,frame)
+
+def drawResponse(image,response,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,255,0)):
     if isinstance(image,Image.Image):
         image_arr = numpy.array(image)
         image_arr = cv2.cvtColor(image_arr, cv2.cv.CV_BGR2RGB)
@@ -17,19 +21,42 @@ def displayResponse(image,response,output_font=cv2.FONT_HERSHEY_SIMPLEX, output_
         image_arr = cv2.imread(image)
     else:
         raise Exception("Unsuported input type: {}".format(type(image)))
+    
+    output_font_scale = 0.8e-3 * image_arr.shape[0]
 
     if isinstance(response,SceneResponse):
         image_arr = cv2.putText(
                         image_arr,
-                        response.label + " " + str(response.confidence),
-                        output_pos,
+                        response.label + " ( " + str(response.confidence)+"% )",
+                        (20,20),
                         output_font,
                         output_font_scale,
                         output_font_color,
-                        output_line_type
+                        1
                         )
+    if isinstance(response,DetectionResponse) or isinstance(response,FaceDetectionResponse) or isinstance(response,FaceRecognitionResponse):
+        for obj in response:
+            image_arr = cv2.rectangle(
+                image_arr,
+                (obj.x_min, obj.y_min),
+                (obj.x_max, obj.y_max),
+                output_font_color,
+                1
+            )
+            if isinstance(response,DetectionResponse) or isinstance(response,FaceRecognitionResponse):
+                if isinstance(response,DetectionResponse):
+                    txt = obj.label
+                elif isinstance(response,FaceRecognitionResponse):
+                    txt = obj.userid
 
-    image_arr = cv2.cvtColor(image_arr, cv2.COLOR_BGR2RGB)
-    plt.imshow(image_arr)
-    plt.show()
-
+                image_arr = cv2.putText(
+                    img=image_arr,
+                    text=txt + " ( " + str(100*obj.confidence)+"% )",
+                    org=(obj.x_min-10, obj.y_min-10),
+                    fontFace=output_font,
+                    fontScale=output_font_scale,
+                    color=output_font_color,
+                    thickness=1
+                )
+            
+    return image_arr

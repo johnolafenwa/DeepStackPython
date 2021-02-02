@@ -1,14 +1,20 @@
-from deepstack import ServerConfig, Detection, SceneRecognition
+from deepstack import ServerConfig, Detection, SceneRecognition, drawResponse, saveResponse, Face
 
 config = ServerConfig("http://localhost:89")
 detection = Detection(config)
 scene = SceneRecognition(config)
+face = Face(config)
 
-detections = detection.processVideo(r"C:\Users\johnolafenwa\Videos\2020-12-16-15-00-14.flv",min_confidence=0.7,display=True,output="detection.mp4")
+#res = detection.processImage(r"C:\Users\johnolafenwa\Documents\AI\DeepStackPython\tests\images\detection.jpg",output="det1.jpg")
 
-f0 = detections[0]
+#saveResponse(r"C:\Users\johnolafenwa\Documents\AI\DeepStackPython\tests\images\detection.jpg",res,"det.jpg")
 
-print(f0.label)
+#face.detectFaceVideo(r"C:\Users\johnolafenwa\Videos\2020-12-16-15-00-14.flv",display=True,output="facedetection2.mp4", min_confidence=0.3)
+res = face.recognizeFace(r"C:\Users\johnolafenwa\Documents\AI\DeepStackPython\tests\images\adele2.jpg",output="fdet1.jpg")
+print(res[0].userid)
+#f0 = detections[0]
+
+#print(f0.label)
 
 
 

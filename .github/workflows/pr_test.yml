@@ -34,6 +34,16 @@ jobs:
         cd detection
         python3 -m pytest
         sudo docker container rm -f deepstack
-      
+
+    - name: Test Face
+        run: |
+          sudo docker run -d --name deepstack -e VISION-FACE=True -p 80:5000 deepquestai/deepstack:cpu-2020.12
+          cd tests
+          export TEST_IMAGES_DIR=$PWD"/images"
+          export TEST_DEEPSTACK_URL="http://localhost:80"
+          cd face
+          python3 -m pytest
+          sudo docker container rm -f deepstack
+        
 
   

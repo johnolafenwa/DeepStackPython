@@ -3,6 +3,7 @@ import cv2
 from .config import ServerConfig
 from .utils import cv2ToBytes, pilToBytes, printError
 from .structs import DetectionResponse
+from .viz import drawResponse, saveResponse
 import requests
 import os
 import validators
@@ -27,7 +28,7 @@ class Detection(object):
         return response
 
     #allow folder input, with exts param specifying comma separated exts
-    def processImage(self, image,format="jpg",min_confidence=0.4 ,callback=None):
+    def detectObject(self, image,format="jpg",min_confidence=0.4,output=None,callback=None, output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,255,0)):
         if isinstance(image,str):
             if os.path.isfile(image):
                 image_data = open(image,"rb").read()
@@ -50,6 +51,9 @@ class Detection(object):
             data = DetectionResponse(response.json())
             if callback is not None:
                 callback(image_data,data)
+            if output is not None:
+                saveResponse(image_data,data,output,output_font,output_font_color)
+
             return data
         elif response.status_code == 403:
             raise Exception("The scene endpoint is not enabled on the DeepStack server")
@@ -60,7 +64,7 @@ class Detection(object):
         else:
             raise Exception("Unknown error : {} occured".format(response.status_code))
 
-    def processVideo(self,video,min_confidence=0.4,output=None,codec=cv2.VideoWriter_fourcc(*'mp4v'),fps=24,display=False,callback=None, continue_on_error=False,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,0,255)):
+    def detectObjectVideo(self,video,min_confidence=0.4,output=None,codec=cv2.VideoWriter_fourcc(*'mp4v'),fps=24,display=False,callback=None, continue_on_error=False,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,255,0)):
         detections = {}
         video_input = cv2.VideoCapture(video)
         width  = video_input.get(3) 
@@ -97,25 +101,8 @@ class Detection(object):
                             callback(time.time(),frame_data,data)
                    
                     if output is not None:
-                        for obj in data:
-                            output_font_scale = 1e-3 * frame.shape[0]
-                            frame = cv2.rectangle(
-                                frame,
-                                (obj.x_min, obj.y_min),
-                                (obj.x_max, obj.y_max),
-                                output_font_color,
-                                1
-                            )
-                            frame = cv2.putText(
-                                img=frame,
-                                text=obj.label + " (" + str(100*obj.confidence)+"%)",
-                                org=(obj.x_min-10, obj.y_min-10),
-                                fontFace=output_font,
-                                fontScale=output_font_scale,
-                                color=output_font_color,
-                                thickness=1
-                            )
-
+                        frame = drawResponse(frame,data,output_font,output_font_color)
+                        
                 elif response.status_code == 403:
                     if continue_on_error:
                         printError("The scene endpoint is not enabled on the DeepStack server")
