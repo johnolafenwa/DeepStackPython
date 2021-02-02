@@ -4,47 +4,47 @@ import cv2
 from PIL import Image
 
 DEEPSTACK_URL = os.getenv("TEST_DEEPSTACK_URL")
-IMAGES_DIR = os.getenv("TEST_IMAGES_DIR")
+IMAGES_DIR = os.getenv("TEST_DATA_DIR")
 config = ServerConfig(DEEPSTACK_URL)
 
 def test_detection_file():
     
     detection = Detection(config)
 
-    res = detection.processImage(os.path.join(IMAGES_DIR,"detection.jpg"))
+    res = detection.detectObject(os.path.join(IMAGES_DIR,"detection.jpg"))
     
     assert len(res) == 3
     
-def test_scene_url():
+def test_detection_url():
    
     
     detection = Detection(config)
 
-    res = detection.processImage("https://docs.deepstack.cc/_images/family-and-dog.jpg")
+    res = detection.detectObject("https://docs.deepstack.cc/_images/family-and-dog.jpg")
 
     assert len(res) == 3
 
-def test_scene_cv2():
+def test_detection_cv2():
 
     detection = Detection(config)
 
     img = cv2.imread(os.path.join(IMAGES_DIR,"detection.jpg"))
 
-    res = detection.processImage(img)
+    res = detection.detectObject(img)
 
     assert len(res) == 3
 
-def test_scene_pil():
+def test_detection_pil():
 
     detection = Detection(config)
 
     img = Image.open(os.path.join(IMAGES_DIR,"detection.jpg"))
 
-    res = detection.processImage(img)
+    res = detection.detectObject(img)
 
     assert len(res) == 3
 
-def test_scene_bytes():
+def test_detection_bytes():
 
     detection = Detection(config)
 
@@ -52,17 +52,17 @@ def test_scene_bytes():
 
     img_data = pilToBytes(img)
 
-    res = detection.processImage(img_data)
+    res = detection.detectObject(img_data)
 
     assert len(res) == 3
 
-def test_scene_video():
+def test_detection_video():
 
     detection = Detection(config)
 
     video = os.path.join(IMAGES_DIR,"video.mp4")
 
-    res = detection.processVideo(video,output="vid.mp4")
+    res = detection.detectObjectVideo(video,output="vid.mp4")
 
     savedVid = cv2.VideoCapture("vid.mp4")
 

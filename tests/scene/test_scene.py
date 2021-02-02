@@ -4,14 +4,14 @@ import cv2
 from PIL import Image
 
 DEEPSTACK_URL = os.getenv("TEST_DEEPSTACK_URL")
-IMAGES_DIR = os.getenv("TEST_IMAGES_DIR")
+IMAGES_DIR = os.getenv("TEST_DATA_DIR")
 config = ServerConfig(DEEPSTACK_URL)
 
 def test_scene_file():
     
     scene = SceneRecognition(config)
 
-    res = scene.processImage(os.path.join(IMAGES_DIR,"scene.jpg"))
+    res = scene.recognizeScene(os.path.join(IMAGES_DIR,"scene.jpg"))
     
     assert res.label == "yard"
     assert isinstance(res.confidence,float)
@@ -20,7 +20,7 @@ def test_scene_url():
    
     scene = SceneRecognition(config)
 
-    res = scene.processImage("https://flowergardengirl.co.uk/wp-content/uploads/2017/07/Garden-Design-chelsea-screen-raised-beds-wonderful-planting-artificial-grass-olives-trees.jpg")
+    res = scene.recognizeScene("https://flowergardengirl.co.uk/wp-content/uploads/2017/07/Garden-Design-chelsea-screen-raised-beds-wonderful-planting-artificial-grass-olives-trees.jpg")
 
     assert res.label == "yard"
     assert isinstance(res.confidence,float)
@@ -31,7 +31,7 @@ def test_scene_cv2():
 
     img = cv2.imread(os.path.join(IMAGES_DIR,"scene.jpg"))
 
-    res = scene.processImage(img)
+    res = scene.recognizeScene(img)
 
     assert res.label == "yard"
     assert isinstance(res.confidence,float)
@@ -42,7 +42,7 @@ def test_scene_pil():
 
     img = Image.open(os.path.join(IMAGES_DIR,"scene.jpg"))
 
-    res = scene.processImage(img)
+    res = scene.recognizeScene(img)
 
     assert res.label == "yard"
     assert isinstance(res.confidence,float)
@@ -55,7 +55,7 @@ def test_scene_bytes():
 
     img_data = pilToBytes(img)
 
-    res = scene.processImage(img_data)
+    res = scene.recognizeScene(img_data)
 
     assert res.label == "yard"
     assert isinstance(res.confidence,float)
@@ -66,7 +66,7 @@ def test_scene_video():
 
     video = os.path.join(IMAGES_DIR,"video.mp4")
 
-    res = scene.processVideo(video,output="vid.mp4")
+    res = scene.recognizeSceneVideo(video,output="vid.mp4")
 
     savedVid = cv2.VideoCapture("vid.mp4")
 

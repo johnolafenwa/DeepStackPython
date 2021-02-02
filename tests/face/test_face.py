@@ -5,7 +5,7 @@ from PIL import Image
 import time
 
 DEEPSTACK_URL = os.getenv("TEST_DEEPSTACK_URL")
-IMAGES_DIR = os.getenv("TEST_IMAGES_DIR")
+IMAGES_DIR = os.getenv("TEST_DATA_DIR")
 config = ServerConfig(DEEPSTACK_URL)
 
 def test_face_detection():
