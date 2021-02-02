@@ -1,4 +1,4 @@
-from deepstack import Face,ServerConfig,pilToBytes
+from deepstack_sdk import Face,ServerConfig,pilToBytes
 import os
 import cv2 
 from PIL import Image

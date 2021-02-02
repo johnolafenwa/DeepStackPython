@@ -1,4 +1,4 @@
-from deepstack import Detection,ServerConfig,pilToBytes
+from deepstack_sdk import Detection,ServerConfig,pilToBytes
 import os
 import cv2 
 from PIL import Image
