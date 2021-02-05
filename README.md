@@ -15,6 +15,7 @@ Just Install DeepStack and the Python SDK and you are good to go!
 
 ## Install DeepStack on Windows
 You can install DeepStack via docker on windows, note that this does not support GPU acceleration
+
 ```docker pull deepquestai/deepstack:cpu-2021.02.1```
 
 You can also install the Native Windows Version of DeepStack, this supports GPU acceleration
@@ -28,7 +29,9 @@ Download and run [DeepStack CPU Installer](https://github.com/johnolafenwa/DeepS
 - Download and run [DeepStack GPU Installer](https://github.com/johnolafenwa/DeepStack/releases/download/0.2-beta/DeepStack-Installer-GPU.2021.01.beta.exe)
 
 ## Install DeepStack on Linux
-Linux Support is via Docker, hence you must install docker first, ```sudo apt-get update && sudo apt-get install docker.io```
+Linux Support is via Docker, hence you must install docker first
+
+```sudo apt-get update && sudo apt-get install docker.io```
 
 ### CPU Version
 ```sudo docker pull deepquestai/deepstack:cpu-2021.02.1```
@@ -68,7 +71,7 @@ for obj in response:
 
 </pre>
 
-!(examples/detection_output.jpg)
+![object detection output](examples/detection_output.jpg)
 
 
 
