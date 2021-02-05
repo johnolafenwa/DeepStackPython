@@ -54,7 +54,7 @@ Note that GPU acceleration is not available for Mac at the moment
 # Examples
 
 ## Object Detection
-!(examples/detection.jpg)
+![object detection](examples/detection.jpg)
 <pre>
 from deepstack_sdk import ServerConfig, Detection
 
