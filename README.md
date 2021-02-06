@@ -4,12 +4,28 @@ Official Python SDK for DeepStack
 ![DevTest](https://github.com/johnolafenwa/DeepStackPython/workflows/DevTest/badge.svg)
 
 # DeepStack
-(DeepStack)[https://deepstack.cc] is an AI server that allows deploying object detection, face detection, face recognition, scene recognition and detection of custom objects on the edge and in production servers. 
+[DeepStack](https://deepstack.cc) is an AI server that allows deploying object detection, face detection, face recognition, scene recognition and detection of custom objects on the edge and in production servers. 
 DeepStack Runs on Docker, Windows, Linux, Mac, Nvidia Jetson and ARM64 devices.
 And it is entirely free and Open Source 
 
 The DeepStack Python SDK makes it easy to perform all of the above awesome AI magic on Images and Videos in few lines of code,
 Just Install DeepStack and the Python SDK and you are good to go!
+
+# Object Detection Sample
+
+![object detection](examples/detection.jpg)
+
+```python
+from deepstack_sdk import ServerConfig, Detection
+
+config = ServerConfig("http://localhost:80")
+detection = Detection(config)
+
+response = detection.detectObject("detection.jpg",output="detection_output.jpg")
+
+```
+
+![object detection output](examples/detection_output.jpg)
 
 # Installation Instructions
 
@@ -57,6 +73,31 @@ Note that GPU acceleration is not available for Mac at the moment
 # Examples
 
 ## Object Detection
+
+## Start DeepStack
+To use the Object Detection API, start DeepStack with the command appropriate for your platform as below.
+
+### On Windows Native Version CPU and GPU
+
+```deepstack --VISION-DETECTION True --PORT 80```
+
+### On Docker CPU Version
+
+```sudo docker run -e VISION-DETECTION=True -v localstorage:/datastore -p 80:5000 deepquestai/deepstack:cpu-2021.02.1```
+
+### On Docker GPU Version
+
+```sudo docker run --gpus all -e VISION-DETECTION=True -v localstorage:/datastore -p 80:5000 deepquestai/deepstack:gpu-2021.02.1```
+
+### On Nvidia Jetson
+
+```sudo docker run --runtime nvidia -e VISION-DETECTION=True -v localstorage:/datastore -p 80:5000 deepquestai/deepstack:jetpack-2021.02.1```
+
+### On ARM64 Devices
+
+```sudo docker run -e VISION-DETECTION=True -v localstorage:/datastore -p 80:5000 deepquestai/deepstack:arm64-2021.02.1```
+
+## Object Detection in Images
 ![object detection](examples/detection.jpg)
 
 ```python
@@ -73,6 +114,30 @@ for obj in response:
 ```
 
 ![object detection output](examples/detection_output.jpg)
+
+<pre>
+Name: dog
+Confidence: 0.90205514
+x_min: 650
+x_max: 792
+y_min: 348
+y_max: 539
+-----------------------
+Name: person
+Confidence: 0.9278088
+x_min: 443
+x_max: 606
+y_min: 114
+y_max: 522
+-----------------------
+Name: person
+Confidence: 0.95218855
+x_min: 295
+x_max: 442
+y_min: 83
+y_max: 520
+-----------------------
+</pre>
 
 
 
