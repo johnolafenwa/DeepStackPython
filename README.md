@@ -58,7 +58,8 @@ Note that GPU acceleration is not available for Mac at the moment
 
 ## Object Detection
 ![object detection](examples/detection.jpg)
-<pre>
+
+```python
 from deepstack_sdk import ServerConfig, Detection
 
 config = ServerConfig("http://localhost:89")
@@ -69,7 +70,7 @@ response = detection.detectObject("detection.jpg",output="detection_output.jpg")
 for obj in response:
     print("Name: {}, Confidence: {}".format(obj.label, obj.confidence))
 
-</pre>
+```
 
 ![object detection output](examples/detection_output.jpg)
 
