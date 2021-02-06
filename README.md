@@ -101,16 +101,21 @@ To use the Object Detection API, start DeepStack with the command appropriate fo
 ![object detection](examples/detection.jpg)
 
 ```python
-from deepstack_sdk import ServerConfig, Detection
+from deepstack_sdk import Detection,ServerConfig
 
-config = ServerConfig("http://localhost:89")
-detection = Detection(config)
+config = ServerConfig("http://localhost:80")
+detector = Detection(config=config)
 
-response = detection.detectObject("detection.jpg",output="detection_output.jpg")
+detections = detector.detectObject("detection.jpg",output="detection_output.jpg")
 
-for obj in response:
-    print("Name: {}, Confidence: {}".format(obj.label, obj.confidence))
-
+for detection in detections:
+    print("Name: {}".format(detection.label))
+    print("Confidence: {}".format(detection.confidence))
+    print("x_min: {}".format(detection.x_min))
+    print("x_max: {}".format(detection.x_max))
+    print("y_min: {}".format(detection.y_min))
+    print("y_max: {}".format(detection.y_max))
+    print("-----------------------")
 ```
 
 ![object detection output](examples/detection_output.jpg)
