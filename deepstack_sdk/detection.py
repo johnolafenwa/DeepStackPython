@@ -28,7 +28,7 @@ class Detection(object):
         return response
 
     #allow folder input, with exts param specifying comma separated exts
-    def detectObject(self, image,format="jpg",min_confidence=0.4,output=None,callback=None, output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,255,0)):
+    def detectObject(self, image,format="jpg",min_confidence=0.4,output=None,callback=None, output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224)):
         if isinstance(image,str):
             if os.path.isfile(image):
                 image_data = open(image,"rb").read()
@@ -64,7 +64,7 @@ class Detection(object):
         else:
             raise Exception("Unknown error : {} occured".format(response.status_code))
 
-    def detectObjectVideo(self,video,min_confidence=0.4,output=None,codec=cv2.VideoWriter_fourcc(*'mp4v'),fps=24,display=False,callback=None, continue_on_error=False,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,255,0)):
+    def detectObjectVideo(self,video,min_confidence=0.4,output=None,codec=cv2.VideoWriter_fourcc(*'mp4v'),fps=24,display=False,callback=None, continue_on_error=False,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224)):
         detections = {}
         video_input = cv2.VideoCapture(video)
         width  = video_input.get(3) 

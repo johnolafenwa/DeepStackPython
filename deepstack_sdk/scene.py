@@ -56,7 +56,7 @@ class SceneRecognition(object):
         else:
             raise Exception("Unknown error : {} occured".format(response.status_code))
 
-    def recognizeSceneVideo(self,video,output=None,codec=cv2.VideoWriter_fourcc(*'mp4v'),fps=24,display=False,callback=None, continue_on_error=False, output_font=cv2.FONT_HERSHEY_SIMPLEX, output_font_color=(0,0,255)):
+    def recognizeSceneVideo(self,video,output=None,codec=cv2.VideoWriter_fourcc(*'mp4v'),fps=24,display=False,callback=None, continue_on_error=False, output_font=cv2.FONT_HERSHEY_SIMPLEX, output_font_color=(0,146,224)):
         detections = {}
         video_input = cv2.VideoCapture(video)
         width  = video_input.get(3) 

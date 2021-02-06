@@ -5,11 +5,11 @@ from .utils import bytestoCV2
 from PIL import Image
 import numpy
 
-def saveResponse(image,response,output,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,255,0)):
+def saveResponse(image,response,output,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224)):
     frame = drawResponse(image,response,output_font,output_font_color)
     cv2.imwrite(output,frame)
 
-def drawResponse(image,response,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,255,0)):
+def drawResponse(image,response,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224)):
     if isinstance(image,Image.Image):
         image_arr = numpy.array(image)
         image_arr = cv2.cvtColor(image_arr, cv2.cv.CV_BGR2RGB)
@@ -32,7 +32,7 @@ def drawResponse(image,response,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font
                         output_font,
                         output_font_scale,
                         output_font_color,
-                        1
+                        2
                         )
     if isinstance(response,DetectionResponse) or isinstance(response,FaceDetectionResponse) or isinstance(response,FaceRecognitionResponse):
         for obj in response:
@@ -41,7 +41,7 @@ def drawResponse(image,response,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font
                 (obj.x_min, obj.y_min),
                 (obj.x_max, obj.y_max),
                 output_font_color,
-                1
+                2
             )
             if isinstance(response,DetectionResponse) or isinstance(response,FaceRecognitionResponse):
                 if isinstance(response,DetectionResponse):
@@ -56,7 +56,7 @@ def drawResponse(image,response,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font
                     fontFace=output_font,
                     fontScale=output_font_scale,
                     color=output_font_color,
-                    thickness=1
+                    thickness=2
                 )
             
     return image_arr
