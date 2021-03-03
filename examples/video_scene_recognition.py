@@ -1,6 +1,6 @@
 from deepstack_sdk import ServerConfig, SceneRecognition
 
-config = ServerConfig("http://localhost:89")
+config = ServerConfig("http://localhost:80")
 scene = SceneRecognition(config)
 
 response = scene.recognizeSceneVideo("video.mp4", output="scene.mp4")

@@ -1,6 +1,6 @@
 from deepstack_sdk import ServerConfig, Detection
 
-config = ServerConfig("http://localhost:89")
+config = ServerConfig("http://localhost:80")
 detection = Detection(config, name="openlogo")
 
 detection.detectObjectVideo("video.mp4",output="video_output.mp4")

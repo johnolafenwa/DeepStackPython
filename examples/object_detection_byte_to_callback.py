@@ -8,12 +8,12 @@ def detection_callback(input_image_byte, detection_result):
     
     # Process detection result
     for obj in detection_result:
-        print("Name: {}, Confidence: {}".format(obj.label, obj.confidence))
+        print("Name: {}, Confidence: {}, x_min: {}, y_min: {}, x_max: {}, y_max: {}".format(obj.label, obj.confidence, obj.x_min, obj.y_min, obj.x_max, obj.y_max))
 
     # You can do other stuffs with the image and the detection results in this function
     
 
-config = ServerConfig("http://localhost:89")
+config = ServerConfig("http://localhost:80")
 detection = Detection(config)
 
 image_byte = open("image.jpg", "rb").read()

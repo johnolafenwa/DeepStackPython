@@ -1,6 +1,6 @@
 from deepstack_sdk import ServerConfig, Face
 
-config = ServerConfig("http://localhost:89")
+config = ServerConfig("http://localhost:80")
 face = Face(config)
 
 response = face.recognizeFace(image=r"face_image.jpg", output="face_output.jpg" )

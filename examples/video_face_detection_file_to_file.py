@@ -1,6 +1,6 @@
 from deepstack_sdk import ServerConfig, Face
 
-config = ServerConfig("http://localhost:89")
+config = ServerConfig("http://localhost:80")
 face = Face(config)
 
 response = face.detectFaceVideo("video.mp4",output="face_detected.mp4")
