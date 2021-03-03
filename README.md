@@ -57,24 +57,105 @@ Note that GPU acceleration is not available for Mac at the moment
 # Examples
 
 ## Object Detection
-![object detection](examples/detection.jpg)
-<pre>
-from deepstack_sdk import ServerConfig, Detection
 
-config = ServerConfig("http://localhost:89")
-detection = Detection(config)
+1) Run DeepStack Object Detection API
 
-response = detection.detectObject("detection.jpg",output="detection_output.jpg")
+    - Docker CPU: `docker run -e VISION-DETECTION=True -v localstorage:/datastore -p 80:5000 deepquestai/deepstack` 
 
-for obj in response:
-    print("Name: {}, Confidence: {}".format(obj.label, obj.confidence))
+    - Docker GPU: `sudo docker run --gpus all -e VISION-DETECTION=True -v localstorage:/datastore -p 80:5000 deepquestai/deepstack:gpu`
 
-</pre>
+    - Windows CPU & GPU: `deepstack --VISION-DETECTION True --PORT 80`
 
-![object detection output](examples/detection_output.jpg)
+    - NVIDIA Jetson: `sudo docker run --runtime nvidia -e VISION-DETECTION=True -p 80:5000 deepquestai/deepstack:jetpack`
+
+2) Sample code
+
+    ![object detection](examples/detection.jpg)
+    <pre>
+    from deepstack_sdk import ServerConfig, Detection
+
+    config = ServerConfig("http://localhost:80")
+    detection = Detection(config)
+
+    response = detection.detectObject("detection.jpg",output="detection_output.jpg")
+
+    for obj in response:
+        print("Name: {}, Confidence: {}".format(obj.label, obj.confidence))
+
+    </pre>
+
+    Result
+
+    ![object detection output](examples/detection_output.jpg)
 
 
+3. Find more code samples in [examples](examples/) folder of this repository.
 
+
+## Face
+
+1) Run DeepStack Face API
+
+    - Docker CPU: `docker run -e VISION-FACE=True -v localstorage:/datastore -p 80:5000 deepquestai/deepstack` 
+
+    - Docker GPU: `sudo docker run --gpus all -e VISION-FACE=True -v localstorage:/datastore -p 80:5000 deepquestai/deepstack:gpu`
+
+    - Windows CPU & GPU: `deepstack --VISION-FACE True --PORT 80`
+
+    - NVIDIA Jetson: `sudo docker run --runtime nvidia -e VISION-FACE=True -p 80:5000 deepquestai/deepstack:jetpack`
+
+2) Sample code: **Face Detection**
+
+    ![object detection](examples/got.jpg)
+    <pre>
+    from deepstack_sdk import ServerConfig, Face
+
+    config = ServerConfig("http://localhost:80")
+    face = Face(config)
+
+    response = face.detectFace("got.jpg",output="got_detected.jpg")
+
+    for obj in response:
+        print("Face Detected, Confidence: {}".format(obj.confidence))
+
+    </pre>
+
+    ![object detection output](examples/got_detected.jpg)
+
+3) Sample code: **Face Recognition**
+
+    i. Register Face
+    ![object detection](examples/thanos.jpg)
+
+    <pre>
+    from deepstack_sdk import ServerConfig, Face
+
+    config = ServerConfig("http://localhost:80")
+    face = Face(config)
+
+    images = ["thanos.jpg"]
+    response = face.registerFace(images=images,userid="Thanos")
+    print(response)
+    </pre>
+    
+
+    ii. Perform Face Recognition
+    ![object detection output](examples/thanos2.jpg)
+
+    <pre>
+    from deepstack_sdk import ServerConfig, Face
+
+    config = ServerConfig("http://localhost:80")
+    face = Face(config)
+
+    response = face.recognizeFace(image=r"thanos2.jpg", output="face_recognized.jpg" )
+    print(response)
+    </pre>
+
+    ![object detection output](examples/face_recognized.jpg)
+
+
+3. Find more code samples in [examples](examples/) folder of this repository.
 
  
 
