@@ -9,7 +9,7 @@ for obj in response:
     print("Face Detected, Confidence: {}".format(obj.confidence))
 
 """
-:: detection.detectFaceVideo()
+:: face.detectFaceVideo()
 
 --- Available Paramaters
 

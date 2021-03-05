@@ -8,7 +8,7 @@ response = scene.recognizeScene(r"scene_image.jpg")
 print("Scene: {} , Confidence: {}".format(response.label, response.confidence))
 
 """
-:: face.recognizeScene()
+:: scene.recognizeScene()
 
 --- Available Paramaters
 
