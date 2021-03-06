@@ -5,7 +5,7 @@ Official Python SDK for DeepStack
 
 # DeepStack
 (DeepStack)[https://deepstack.cc] is an AI server that allows deploying object detection, face detection, face recognition, scene recognition and detection of custom objects on the edge and in production servers. 
-DeepStack Runs on Docker, Windows, Linux, Mac, Nvidia Jetson and ARM64 devices.
+DeepStack Runs on Docker, Windows, Linux, Mac and Nvidia Jetson devices.
 And it is entirely free and Open Source 
 
 The DeepStack Python SDK makes it easy to perform all of the above awesome AI magic on Images and Videos in few lines of code,
@@ -47,9 +47,6 @@ Note that GPU acceleration is not available for Mac at the moment
 
 ## Install DeepStack on Nvidia Jetson
 ```sudo docker pull deepquestai/deepstack:jetpack-2021.02.1```
-
-## Install DeepStack on ARM64 Devices
-```sudo docker pull deepquestai/deepstack:arm64-2021.02.1```
 
 # Install DeepStack Python SDK
 ```pip3 install deepstack-sdk```
