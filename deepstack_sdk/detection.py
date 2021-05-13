@@ -124,7 +124,8 @@ class Detection(object):
                     else:
                         raise Exception("Unknown error : {} occured".format(response.status_code))
                 detections[frame_count-1] = data
-                out.write(frame)
+                if output is not None:
+                    out.write(frame)
 
                 if display:
                     cv2.imshow('Image Viewer', frame)
@@ -135,7 +136,8 @@ class Detection(object):
                 break
 
         video_input.release()
-        out.release()
+        if output is not None:
+            out.release()
 
         return detections
                 
