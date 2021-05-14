@@ -5,11 +5,11 @@ from .utils import bytestoCV2
 from PIL import Image
 import numpy
 
-def saveResponse(image,response,output,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224)):
-    frame = drawResponse(image,response,output_font,output_font_color)
+def saveResponse(image,response,output,show_label,draw_bounding_box, output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224)):
+    frame = drawResponse(image,response, show_label, draw_bounding_box, output_font,output_font_color)
     cv2.imwrite(output,frame)
 
-def drawResponse(image,response,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224)):
+def drawResponse(image,response, show_label=True, draw_bounding_box=True, output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224)):
     if isinstance(image,Image.Image):
         image_arr = numpy.array(image)
         image_arr = cv2.cvtColor(image_arr, cv2.cv.CV_BGR2RGB)
@@ -36,13 +36,14 @@ def drawResponse(image,response,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font
                         )
     if isinstance(response,DetectionResponse) or isinstance(response,FaceDetectionResponse) or isinstance(response,FaceRecognitionResponse):
         for obj in response:
-            image_arr = cv2.rectangle(
-                image_arr,
-                (obj.x_min, obj.y_min),
-                (obj.x_max, obj.y_max),
-                output_font_color,
-                2
-            )
+            if draw_bounding_box:
+                image_arr = cv2.rectangle(
+                    image_arr,
+                    (obj.x_min, obj.y_min),
+                    (obj.x_max, obj.y_max),
+                    output_font_color,
+                    2
+                )
             if isinstance(response,DetectionResponse) or isinstance(response,FaceRecognitionResponse):
                 if isinstance(response,DetectionResponse):
                     txt = obj.label
@@ -51,7 +52,7 @@ def drawResponse(image,response,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font
 
                 image_arr = cv2.putText(
                     img=image_arr,
-                    text=txt + " ( " + str(100*obj.confidence)+"% )",
+                    text=txt + " ( " + str(100*obj.confidence)+"% )" if show_label else None,
                     org=(obj.x_min-10, obj.y_min-10),
                     fontFace=output_font,
                     fontScale=output_font_scale,
