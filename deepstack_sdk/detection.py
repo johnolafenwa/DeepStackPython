@@ -28,7 +28,11 @@ class Detection(object):
         return response
 
     #allow folder input, with exts param specifying comma separated exts
-    def detectObject(self, image,format="jpg",min_confidence=0.4,output=None,callback=None, output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224)):
+    def detectObject(self, image,format="jpg",min_confidence=0.4,output=None, 
+                    callback=None, output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224),
+                    draw_bounding_box=True,
+                    show_label=True,
+                    show_conf=True):
         if isinstance(image,str):
             if os.path.isfile(image):
                 image_data = open(image,"rb").read()
@@ -52,7 +56,7 @@ class Detection(object):
             if callback is not None:
                 callback(image_data,data)
             if output is not None:
-                saveResponse(image_data,data,output,output_font,output_font_color)
+                saveResponse(image_data,data,output,output_font,output_font_color,draw_bounding_box,show_label,show_conf)
 
             return data
         elif response.status_code == 403:
@@ -64,7 +68,12 @@ class Detection(object):
         else:
             raise Exception("Unknown error : {} occured".format(response.status_code))
 
-    def detectObjectVideo(self,video,min_confidence=0.4,output=None,codec=cv2.VideoWriter_fourcc(*'mp4v'),fps=24,display=False,callback=None, continue_on_error=False,output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224)):
+    def detectObjectVideo(self,video,min_confidence=0.4,output=None,codec=cv2.VideoWriter_fourcc(*'mp4v'),
+                            fps=24,display=False,callback=None, continue_on_error=False, 
+                                output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224),
+                                draw_bounding_box=True,
+                                show_label=True,
+                                show_conf=True):
         detections = {}
         video_input = cv2.VideoCapture(video)
         width  = video_input.get(3) 
@@ -101,7 +110,7 @@ class Detection(object):
                             callback(time.time(),frame_data,data)
                    
                     if output is not None:
-                        frame = drawResponse(frame,data,output_font,output_font_color)
+                        frame = drawResponse(frame,data,output_font,output_font_color,draw_bounding_box,show_label,show_conf)
                         
                 elif response.status_code == 403:
                     if continue_on_error:
