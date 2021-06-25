@@ -1,7 +1,7 @@
 from PIL import Image
 import cv2 
 from .config import ServerConfig
-from .utils import cv2ToBytes, pilToBytes, printError
+from .utils import cv2ToBytes, pilToBytes, printError, frameTracker
 from .structs import DetectionResponse
 from .viz import drawResponse, saveResponse
 import requests
@@ -73,7 +73,8 @@ class Detection(object):
                                 output_font=cv2.FONT_HERSHEY_SIMPLEX,output_font_color=(0,146,224),
                                 draw_bounding_box=True,
                                 show_label=True,
-                                show_conf=True):
+                                show_conf=True,
+                                log=True):
         detections = {}
         video_input = cv2.VideoCapture(video)
         width  = video_input.get(3) 
@@ -97,6 +98,7 @@ class Detection(object):
             valid, frame = video_input.read()
             if valid:
                 frame_count = frame_count + 1
+                frameTracker(log, frame_count)
                 frame_data = cv2ToBytes(frame)
                 response = self.__process_image(frame_data, min_confidence)
                 data = None
