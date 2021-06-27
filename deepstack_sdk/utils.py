@@ -29,4 +29,4 @@ def bytestoCV2(image_data):
 
 def frameTracker(log, frame_count):
     if log:
-        print("Frame {} processed".format(frame_count))
+        print("Processing frame {}".format(frame_count))
