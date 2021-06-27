@@ -26,3 +26,7 @@ def bytesToPIL(image_data):
 def bytestoCV2(image_data):
     np_arr = numpy.asarray(bytearray(image_data),dtype=numpy.uint8)
     return cv2.imdecode(np_arr,cv2.IMREAD_COLOR)
+
+def frameTracker(log, frame_count):
+    if log:
+        print("Processing frame {}".format(frame_count))
