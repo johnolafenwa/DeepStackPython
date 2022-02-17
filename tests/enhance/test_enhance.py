@@ -10,7 +10,7 @@ config = ServerConfig(DEEPSTACK_URL)
 
 def test_enhance_file():
     enhance = Enhance(config)
-    res = enhance.enhanceObject(os.path.join(IMAGES_DIR, "sky.jpg"))
+    res = enhance.enhanceObject(os.path.join(IMAGES_DIR, "supermarket.jpg"))
     assert len(res) == 3
 
 
@@ -22,21 +22,21 @@ def test_enhance_url():
 
 def test_enhance_cv2():
     enhance = Enhance(config)
-    img = cv2.imread(os.path.join(IMAGES_DIR, "sky.jpg"))
+    img = cv2.imread(os.path.join(IMAGES_DIR, "supermarket.jpg"))
     res = enhance.enhanceObject(img)
     assert len(res) == 3
 
 
 def test_enhance_pil():
     enhance = Enhance(config)
-    img = Image.open(os.path.join(IMAGES_DIR, "sky.jpg"))
+    img = Image.open(os.path.join(IMAGES_DIR, "supermarket.jpg"))
     res = enhance.enhanceObject(img)
     assert len(res) == 3
 
 
 def test_enhance_bytes():
     enhance = Enhance(config)
-    img = Image.open(os.path.join(IMAGES_DIR, "sky.jpg"))
+    img = Image.open(os.path.join(IMAGES_DIR, "supermarket.jpg"))
     img_data = pilToBytes(img)
     res = enhance.enhanceObject(img_data)
     assert len(res) == 3
