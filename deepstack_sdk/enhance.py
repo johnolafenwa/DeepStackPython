@@ -12,7 +12,7 @@ import base64
 class Enhance(object):
     def __init__(self, config: ServerConfig):
         self.config = config
-        self.__endpoint = "/v1/vision/enhance"
+        self.__endpoint = "v1/vision/enhance"
 
     def __process_image(self, image_data: bytes):
         response = requests.post(self.config.server_url + self.__endpoint,
