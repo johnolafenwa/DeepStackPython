@@ -14,16 +14,16 @@ def test_enhance_file():
     assert len(res) == 3
 
 
-def test_enhance_url():
-    enhance = Enhance(config)
-    res = enhance.enhanceObject("https://docs.deepstack.cc/_images/sky.jpg")
-    assert len(res) == 3
-
-
 def test_enhance_cv2():
     enhance = Enhance(config)
     img = cv2.imread(os.path.join(IMAGES_DIR, "disney.png"))
     res = enhance.enhanceObject(img)
+    assert len(res) == 3
+
+
+def test_enhance_url():
+    enhance = Enhance(config)
+    res = enhance.enhanceObject("https://docs.deepstack.cc/_images/sky.jpg")
     assert len(res) == 3
 
 

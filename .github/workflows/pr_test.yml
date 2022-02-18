@@ -16,16 +16,6 @@ jobs:
       run: pip3 install pytest setuptools --upgrade
     - name: Install DeepStack Client SDK
       run: python3 setup.py install --user
-    - name: Test Enhance
-      run: |
-        sudo docker run -d --name deepstack -e VISION-ENHANCE=True -p 80:5000 deepquestai/deepstack:cpu-2022.01.1
-        sudo docker logs deepstack
-        cd tests
-        export TEST_DATA_DIR=$PWD"/data"
-        export TEST_DEEPSTACK_URL="http://localhost:80"
-        cd enhance
-        python3 -m pytest
-        sudo docker container rm -f deepstack
     - name: Test Scene
       run: |
         sudo docker run -d --name deepstack -e VISION-SCENE=True -p 80:5000 deepquestai/deepstack:cpu-2022.01.1
@@ -67,6 +57,17 @@ jobs:
         export TEST_DATA_DIR=$PWD"/data"
         export TEST_DEEPSTACK_URL="http://localhost:80"
         cd custom-detection
+        python3 -m pytest
+        sudo docker container rm -f deepstack
+
+    - name: Test Enhance
+      run: |
+        sudo docker run -d --name deepstack -e VISION-ENHANCE=True -p 80:5000 deepquestai/deepstack:cpu-2022.01.1
+        sudo docker logs deepstack
+        cd tests
+        export TEST_DATA_DIR=$PWD"/data"
+        export TEST_DEEPSTACK_URL="http://localhost:80"
+        cd enhance
         python3 -m pytest
         sudo docker container rm -f deepstack
         
