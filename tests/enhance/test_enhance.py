@@ -10,33 +10,38 @@ config = ServerConfig(DEEPSTACK_URL)
 
 def test_enhance_file():
     enhance = Enhance(config)
-    res = enhance.enhanceObject(os.path.join(IMAGES_DIR, "supermarket.jpg"))
-    assert len(res) == 3
+    res = enhance.enhanceObject(os.path.join(IMAGES_DIR, "disney.png"))
+    assert res["width"] == 172
+    assert res["height"] == 172
 
 
 def test_enhance_cv2():
     enhance = Enhance(config)
-    img = cv2.imread(os.path.join(IMAGES_DIR, "supermarket.jpg"))
+    img = cv2.imread(os.path.join(IMAGES_DIR, "disney.png"))
     res = enhance.enhanceObject(img)
-    assert len(res) == 3
+    assert res["width"] == 172
+    assert res["height"] == 172
 
 
 def test_enhance_url():
     enhance = Enhance(config)
     res = enhance.enhanceObject("https://docs.deepstack.cc/_images/sky.jpg")
-    assert len(res) == 3
+    assert res["width"] == 1840
+    assert res["height"] == 1036
 
 
 def test_enhance_pil():
     enhance = Enhance(config)
-    img = Image.open(os.path.join(IMAGES_DIR, "supermarket.jpg"))
+    img = Image.open(os.path.join(IMAGES_DIR, "disney.png"))
     res = enhance.enhanceObject(img)
-    assert len(res) == 3
+    assert res["width"] == 172
+    assert res["height"] == 172
 
 
 def test_enhance_bytes():
     enhance = Enhance(config)
-    img = Image.open(os.path.join(IMAGES_DIR, "supermarket.jpg"))
+    img = Image.open(os.path.join(IMAGES_DIR, "disney.png"))
     img_data = pilToBytes(img)
     res = enhance.enhanceObject(img_data)
-    assert len(res) == 3
+    assert res["width"] == 172
+    assert res["height"] == 172
