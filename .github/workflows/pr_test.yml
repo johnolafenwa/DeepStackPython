@@ -16,9 +16,21 @@ jobs:
       run: pip3 install pytest setuptools --upgrade
     - name: Install DeepStack Client SDK
       run: python3 setup.py install --user
+    - name: Test Enhance
+      run: |
+        sudo docker run -d --name deepstack -e VISION-ENHANCE=True -p 80:5000 deepquestai/deepstack:cpu-2022.01.1
+        sudo docker logs deepstack
+        cd tests
+        export TEST_DATA_DIR=$PWD"/data"
+        export TEST_DEEPSTACK_URL="http://localhost:80"
+        cd enhance
+        python3 -m pytest
+        sudo docker container rm -f deepstack
+
     - name: Test Scene
       run: |
-        sudo docker run -d --name deepstack -e VISION-SCENE=True -p 80:5000 deepquestai/deepstack:cpu-2020.12
+        sudo docker run -d --name deepstack -e VISION-SCENE=True -p 80:5000 deepquestai/deepstack:cpu-2022.01.1
+        sudo docker logs deepstack
         cd tests
         export TEST_DATA_DIR=$PWD"/data"
         export TEST_DEEPSTACK_URL="http://localhost:80"
@@ -27,7 +39,8 @@ jobs:
         sudo docker container rm -f deepstack
     - name: Test Detection
       run: |
-        sudo docker run -d --name deepstack -e VISION-DETECTION=True -p 80:5000 deepquestai/deepstack:cpu-2020.12
+        sudo docker run -d --name deepstack -e VISION-DETECTION=True -p 80:5000 deepquestai/deepstack:cpu-2022.01.1
+        sudo docker logs deepstack
         cd tests
         export TEST_DATA_DIR=$PWD"/data"
         export TEST_DEEPSTACK_URL="http://localhost:80"
@@ -37,7 +50,8 @@ jobs:
 
     - name: Test Face
       run: |
-        sudo docker run -d --name deepstack -e VISION-FACE=True -p 80:5000 deepquestai/deepstack:cpu-2020.12
+        sudo docker run -d --name deepstack -e VISION-FACE=True -p 80:5000 deepquestai/deepstack:cpu-2022.01.1
+        sudo docker logs deepstack
         cd tests
         export TEST_DATA_DIR=$PWD"/data"
         export TEST_DEEPSTACK_URL="http://localhost:80"
@@ -49,12 +63,15 @@ jobs:
       run: |
         cd tests
         modeldir=$(pwd)
-        sudo docker run -d --name deepstack -v $modeldir/"data":/modelstore/detection -p 80:5000 deepquestai/deepstack:cpu-2020.12
+        sudo docker run -d --name deepstack -v $modeldir/"data":/modelstore/detection -p 80:5000 deepquestai/deepstack:cpu-2022.01.1
+        sudo docker logs deepstack
         export TEST_DATA_DIR=$PWD"/data"
         export TEST_DEEPSTACK_URL="http://localhost:80"
         cd custom-detection
         python3 -m pytest
         sudo docker container rm -f deepstack
+
+
         
 
   

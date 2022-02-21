@@ -6,7 +6,7 @@ Official Python SDK for DeepStack
 
 # DeepStack
 
-(DeepStack)[https://deepstack.cc] is an AI server that allows deploying object detection, face detection, face recognition, scene recognition and detection of custom objects on the edge and in production servers.
+(DeepStack)[https://deepstack.cc] is an AI server that allows deploying object detection, face detection, face recognition, image enhance, scene recognition and detection of custom objects on the edge and in production servers.
 DeepStack Runs on Docker, Windows, Linux, Mac and Nvidia Jetson devices.
 And it is entirely free and Open Source
 
@@ -159,4 +159,42 @@ Note that GPU acceleration is not available for Mac at the moment
 
    ![object detection output](examples/face_recognized.jpg)
 
+
+
+## Enhance (4X)
+
+1. Run DeepStack Enhance API
+
+   - Docker CPU: `docker run -e VISION-ENHANCE=True -v localstorage:/datastore -p 80:5000 deepquestai/deepstack`
+
+   - Docker GPU: `sudo docker run --gpus all -e VISION-ENHANCE=True -v localstorage:/datastore -p 80:5000 deepquestai/deepstack:gpu`
+
+   - Windows CPU & GPU: `deepstack --VISION-ENHANCE True --PORT 80`
+
+   - NVIDIA Jetson: `sudo docker run --runtime nvidia -e VISION-ENHANCE=True -p 80:5000 deepquestai/deepstack:jetpack
+`
+
+2. Sample code
+   
+   ![enhance](examples/sky.jpg)
+
+Input Image dimension (Width: 460px, Height :259px)
+<pre>
+   from deepstack_sdk import ServerConfig, Enhance
+   
+   config = ServerConfig("http://localhost:80")
+   enhance = Enhance(config)
+   
+   response = enhance.enhanceObject("supermarket.jpg", output="supermarket_4X.jpg")
+   
+   for obj in response:
+       print("Base64: {}, width: {}, height: {}".format(obj.base64, obj.width, obj.height))
+ </pre>
+
+   Output Image dimension (Width: 1840px, Height : 1036px)
+
+   ![enhance output](examples/sky-4X.jpg)
+
+
 3) Find more code samples in [examples](examples/) folder of this repository.
+
